@@ -1,0 +1,12 @@
+*.swp
+*.pyc
+*.DS_Store
+*.png
+*.pkl
+*.csv
+*.txt
+._*
+data/*.csv
+data/*.txt
+./idea/
+.dir_bash_history
