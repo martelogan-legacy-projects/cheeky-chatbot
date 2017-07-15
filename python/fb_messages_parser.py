@@ -15,23 +15,17 @@ import csv
 # GLOBAL VARIABLES
 
 target_user_name = ""
+structured_facebook_data_infile_path = ""
+parsed_facebook_data_output_path = ""
+allowed_words_per_sentence = 0
 cur_conversation = []
 
 
 # PRIVATE HELPER FUNCTIONS
 
-def delete_content(outfile):
+def delete_leftover_content(outfile):
     with open(outfile, "w"):
         pass
-
-
-def write_to_file(outfile_path):
-    if len(cur_conversation) <= 1:
-        return
-    with open(r'' + outfile_path, mode="a") as outfile:
-        for s in cur_conversation:
-            outfile.write("%s\n" % s)
-        outfile.write("===\n")
 
 
 def encode_to_utf8(message):
@@ -39,7 +33,7 @@ def encode_to_utf8(message):
 
 
 def attempt_append_to_cur_conversation(message):
-    if not message:
+    if (not message) or(len(message.split()) > allowed_words_per_sentence):
         return False
     message = encode_to_utf8(message)
     if message:
@@ -48,10 +42,19 @@ def attempt_append_to_cur_conversation(message):
     return False
 
 
+def write_deepqa_conversation_to_file(outfile_path):
+    if len(cur_conversation) <= 1:
+        return
+    with open(r'' + outfile_path, mode="a") as outfile:
+        for s in cur_conversation:
+            outfile.write("%s\n" % s)
+        outfile.write("===\n")
+
+
 def output_deep_qa_conversations(outfile_path):
     global cur_conversation
     # read csv into memory for easy indexing (can't be too large)
-    with open('fb_messages_all.csv', 'r') as csv_to_parse:
+    with open(r'' + structured_facebook_data_infile_path, 'r') as csv_to_parse:
         reader = csv.reader(csv_to_parse)
         all_messages = list(reader)
         messages_count = len(all_messages)
@@ -106,7 +109,7 @@ def output_deep_qa_conversations(outfile_path):
                         break
                     next_row = all_messages[row_number]
                     next_name = next_row[1]
-                write_to_file(outfile_path)
+                write_deepqa_conversation_to_file(outfile_path)
                 cur_conversation = []
                 t1_name = ""
                 t1_msg = ""
@@ -123,17 +126,38 @@ def output_deep_qa_conversations(outfile_path):
             t1_name = str(message_row[1].strip())
             t1_msg = str(message_row[3].strip())
         row_number += 1
-    print("\n\tFinished parsing and exporting new CSV with target user messages.")
+    print "\n\tFinished parsing and exporting trainable corpus for target user '{}'".format(target_user_name.replace("\\", ""))
 
 
-def parse_to_deep_qa(argu):
+def set_global_vars(argu):
     global target_user_name
+    global structured_facebook_data_infile_path
+    global parsed_facebook_data_output_path
+    global allowed_words_per_sentence
     if argu.target_user_name:
         target_user_name = argu.target_user_name
     else:
         target_user_name = raw_input("\n\tEnter the name of the Facebook profile from which to make a text corpus: \n\t")
-    outfile_path = '/media/Shared_Data/fb_messages_parsed_' + target_user_name + '.txt'
-    delete_content(outfile_path)
+    if argu.structured_facebook_data_infile_path:
+        structured_facebook_data_infile_path = argu.structured_facebook_data_infile_path
+    else:
+        structured_facebook_data_infile_path = raw_input("\n\tEnter the path to structured facebook data from which to parse a text corpus: \n\t")
+    if argu.parsed_facebook_data_output_path:
+        parsed_facebook_data_output_path = argu.parsed_facebook_data_output_path
+    else:
+        parsed_facebook_data_output_path = raw_input("\n\tEnter the outfile path for the parsed facebook text corpus: \n\t")
+    if argu.allowed_words_per_sentence != 0:
+        allowed_words_per_sentence = argu.allowed_words_per_sentence
+    else:
+        sentence_length_raw_string = raw_input("\n\tEnter the sentence length (in # words) for which to extract messages: \n\t")
+        allowed_words_per_sentence = int(sentence_length_raw_string)
+
+
+def parse_to_deep_qa(argu):
+    set_global_vars(argu)
+    formatted_target_user_name_str = target_user_name.lower().replace(" ", "_")
+    outfile_path = parsed_facebook_data_output_path + "/" + formatted_target_user_name_str + "-" + str(allowed_words_per_sentence) + '.txt'
+    delete_leftover_content(outfile_path)
     output_deep_qa_conversations(outfile_path)
 
 ##############################################################################

@@ -9,6 +9,18 @@ def parse_to_deep_qa_args_parsing(subparsers):
     parser_t.add_argument('-u', '--user', required=False, type=str,
                           dest='target_user_name', action='store',
                           default="", help=help_str)
+    help_str = 'Path for structured facebook data input\n'
+    parser_t.add_argument('-i', '--input', required=False, type=str,
+                          dest='structured_facebook_data_infile_path', action='store',
+                          default="", help=help_str)
+    help_str = 'Path for parsed facebook data output\n'
+    parser_t.add_argument('-o', '--output', required=False, type=str,
+                          dest='parsed_facebook_data_output_path', action='store',
+                          default="", help=help_str)
+    help_str = 'Sentence length (in # words) for which to extract messages'
+    parser_t.add_argument('-l', '--sentence_length', required=False, type=int,
+                          dest='allowed_words_per_sentence', action='store',
+                          default=0, help=help_str)
     parser_t.set_defaults(func=parse_to_deep_qa)
 
 
