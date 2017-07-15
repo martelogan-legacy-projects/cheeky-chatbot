@@ -18,5 +18,4 @@ data/facebook_structured/*
 data/facebook_parsed/*
 !trained_models/
 trained_models/*
-./idea/*
 .dir_bash_history
