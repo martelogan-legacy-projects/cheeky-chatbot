@@ -19,3 +19,4 @@ data/facebook_parsed/*
 !trained_models/
 trained_models/*
 .dir_bash_history
+./idea/
