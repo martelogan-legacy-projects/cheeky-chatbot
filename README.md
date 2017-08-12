@@ -22,8 +22,8 @@ and deployment execution scripts can be run immediately from the project root.
 
 Of course, the environment setup has some fairly strict requirements: 
 
-1. Ensure that your local environment is equipped with Bash version >=3, <br>
-in addition to seperate distributions of Python 2.7+ and Python 3+ (ideally managed by [conda](https://docs.continuum.io/anaconda/))
+1. Ensure that your local environment is equipped with a Bash version >=3, in addition to <br>
+seperate distributions of Python 2.7+ and Python 3+ (ideally managed by [conda](https://docs.continuum.io/anaconda/))
 
 
 2. Install the **fb-chat-archive-parser** via pip under the Python 2.7 environment by running:
