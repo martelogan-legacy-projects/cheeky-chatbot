@@ -6,29 +6,29 @@
 # Simple string variables for the train.sh execution
 
 # executable dependency path variables
-PYTHON2_PATH=/home/logan/Programs/anaconda2/envs/fb-chatbot/bin/python
-PYTHON3_PATH=/home/logan/Programs/anaconda2/envs/py361/bin/python
-FBCAP_PATH=/home/logan/Programs/anaconda2/envs/fb-chatbot/bin/fbcap
+PYTHON2_PATH=/home/<USERNAME>/Programs/anaconda2/envs/<FB_FRIENDBOT_FACTORY_PYTHON2_ENV>/bin/python
+PYTHON3_PATH=/home/<USERNAME>/Programs/anaconda2/envs/<FB_FRIENDBOT_FACTORY_PYTHON3_ENV>/bin/python
+FBCAP_PATH=/home/<USERNAME>/Programs/anaconda2/envs/<FB_FRIENDBOT_FACTORY_PYTHON2_ENV>/bin/fbcap
 
 # path to uncompressed facebook archive - retrieved via https://www.facebook.com/help/212802592074644?helpref=uf_permalink
-FACEBOOK_ARCHIVE_PATH=/home/logan/Projects/cheeky-chatbot/data/facebook_unstructured/facebook-loganmartel77
+FACEBOOK_ARCHIVE_PATH=/home/<USERNAME>/Projects/cheeky-chatbot/data/facebook_unstructured/facebook-<USERNAME>
 
 # parameters related to the 'fbchat-archive-parser' dependency - namely: output path & output archive format type
 FACEBOOK_STRUCTURED_OUTPUT_TYPE=csv
-FACEBOOK_STRUCTURED_OUTFILE_PATH=/home/logan/Projects/cheeky-chatbot/data/facebook_structured/fb_messages_all.csv
+FACEBOOK_STRUCTURED_OUTFILE_PATH=/home/<USERNAME>/Projects/cheeky-chatbot/data/facebook_structured/fb_messages_all.csv
 
 # output destination & trainable data format to be prepared by the 'fb_messages_parser.py' python script
 PARSED_DATA_FORMAT=deep_qa
-PARSED_DATA_PATH=/home/logan/Projects/DeepQA/data/lightweight
+PARSED_DATA_PATH=/home/<USERNAME>/Projects/DeepQA/data/lightweight
 
 # desired output/backup directory for trained models
 # notes:
 # - may not be easily supported by some training libraries
 # - set to empty sting if no backup is required
-TRAINED_MODELS_BACKUP_PATH=/home/logan/Projects/cheeky-chatbot/trained_models
+TRAINED_MODELS_BACKUP_PATH=/home/<USERNAME>/Projects/cheeky-chatbot/trained_models
 
 # directory path for model training library
-MODEL_TRAINING_ROOT_DIR=/home/logan/Projects/DeepQA
+MODEL_TRAINING_ROOT_DIR=/home/<USERNAME>/Projects/DeepQA
 
 
 # -- Section 2: Training Execution Variables --
@@ -41,7 +41,7 @@ TRAINABLE_MODEL_TAG="${formatted_target_user_str}-${sentence_length}"
 
 TRAINED_MODEL_ORIGINAL_DESTINATION="${MODEL_TRAINING_ROOT_DIR}/save/model-${TRAINABLE_MODEL_TAG}/"
 
-MODEL_TRAINING_EXECUTION_COMMAND=$PYTHON3_PATH /home/logan/Projects/DeepQA/main.py --modelTag "$TRAINABLE_MODEL_TAG" --corpus lightweight --datasetTag "$TRAINABLE_MODEL_TAG" --maxLength $sentence_length --rootDir "$MODEL_TRAINING_ROOT_DIR"
+MODEL_TRAINING_EXECUTION_COMMAND=$PYTHON3_PATH $MODEL_TRAINING_ROOT_DIR/main.py --modelTag "$TRAINABLE_MODEL_TAG" --corpus lightweight --datasetTag "$TRAINABLE_MODEL_TAG" --maxLength $sentence_length --rootDir "$MODEL_TRAINING_ROOT_DIR"
 
 
 # -- Section 3: Array Declaration Variables --
@@ -49,8 +49,7 @@ MODEL_TRAINING_EXECUTION_COMMAND=$PYTHON3_PATH /home/logan/Projects/DeepQA/main.
 # Array variables to orchestrate batch of training executions
 
 # list of target users for which to create chatbots
-# TARGET_USER_RAW_STRINGS_ARRAY=("Mathias\ Tait" "Logan\ Martel" "Nathan\ Furtado" "Dan\ Harness" "Michael\ Klonarakis" "Kyler\ Cordeiro" "Lucas\ Galamini")
-TARGET_USER_RAW_STRINGS_ARRAY=("Rifaquat Nabi")
+# TARGET_USER_RAW_STRINGS_ARRAY=("FISTNAME_1\ LASTNAME_1" "FISTNAME_2\ LASTNAME_2" "FISTNAME_N\ LASTNAME_N")
 
 # list of sentence lengths on which to train separate models
 SENTENCE_LENGTHS_ARRAY=(10 50 100)
