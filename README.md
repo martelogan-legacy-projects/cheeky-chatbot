@@ -36,9 +36,9 @@ in addition to seperate distributions of Python 2.7+ and Python 3+ (ideally mana
 
 4. Ensure that an uncompressed 
 [facebook archive](https://www.facebook.com/help/212802592074644?helpref=uf_permalink)
-is made available <br> (conventionally under **data/facebook_unstructured/\<facebook-archive\>**)
+is made available <br> (conventionally under _data/facebook_unstructured/\<facebook-archive\>_)
 
-4. Specify desired setup under **config/training.config** & **config/deployment.config**
+4. Specify desired setup under _config/training.config_ & _config/deployment.config_
 
 5. Run `./train.sh` or `./deploy.sh` from project root per relevant task
 
