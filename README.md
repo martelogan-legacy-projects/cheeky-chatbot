@@ -17,7 +17,7 @@ to
 ## Installation & Execution
 
 Assuming that all external dependencies are ready and respective paths 
-appropriately specified under the **config/** subdirectory, the training
+appropriately specified under the **config** subdirectory, the training
 and deployment execution scripts can be run immediately from the project root.
 
 Of course, the environment setup has some fairly strict requirements: 
@@ -38,7 +38,7 @@ delegate conversation data  (the default is [DeepQA](https://github.com/Conchyli
 [facebook archive](https://www.facebook.com/help/212802592074644?helpref=uf_permalink)
 is made available (conventionally under **data/facebook_unstructured/<facebook-archive>**)
 
-4. Configure the respective paths (and other desired parameters) under **config/training.config** and **config/deployment.config**
+4. Specify desired setup under **config/training.config** & **config/deployment.config**
 
 5. Run `./train.sh` and subsequently `./deploy.sh` from project root to instigate pipeline
 
