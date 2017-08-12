@@ -40,7 +40,7 @@ is made available (conventionally under **data/facebook_unstructured/<facebook-a
 
 4. Specify desired setup under **config/training.config** & **config/deployment.config**
 
-5. Run `./train.sh` and subsequently `./deploy.sh` from project root to instigate pipeline
+5. Run `./train.sh` or `./deploy.sh` from project root per relevant task
 
 
 ## Citation
