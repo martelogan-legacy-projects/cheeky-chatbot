@@ -26,7 +26,7 @@ Of course, the environment setup has some fairly strict requirements:
 seperate distributions of Python 2.7+ and Python 3+ (ideally managed by [conda](https://docs.continuum.io/anaconda/))
 
 
-2. Install the **fb-chat-archive-parser** via pip under the Python 2.7 environment by running:
+2. Install the [fb-chat-archive-parser](https://github.com/ownaginatious/fbchat-archive-parser) via pip under the Python 2.7 environment by running:
 ```bash
    pip install fbchat-archive-parser
 ```
