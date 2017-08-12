@@ -28,18 +28,17 @@ in addition to seperate distributions of Python 2.7+ and Python 3+ (ideally mana
 
 2. Install the **fb-chat-archive-parser** via pip under the Python 2.7 environment by running:
 ```bash
-pip install fbchat-archive-parser
+   pip install fbchat-archive-parser
 ```
 
 3. Install some training library to which the friendbot factory will 
-delegate conversation data  (the default is [DeepQA](https://github.com/Conchylicultor/DeepQA])
+delegate conversation data  (the default is [DeepQA](https://github.com/Conchylicultor/DeepQA))
 
 4. Ensure that an uncompressed 
 [facebook archive](https://www.facebook.com/help/212802592074644?helpref=uf_permalink)
 is made available (conventionally under **data/facebook_unstructured/<facebook-archive>**)
 
-4. Configure the respective paths for these dependencies (and other desired parameters) under **config/training.config**
-and **config/deployment.config**
+4. Configure the respective paths (and other desired parameters) under **config/training.config** and **config/deployment.config**
 
 5. Run `./train.sh` and subsequently `./deploy.sh` from project root to instigate pipeline
 
