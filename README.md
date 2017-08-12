@@ -36,7 +36,7 @@ delegate conversation data  (the default is [DeepQA](https://github.com/Conchyli
 
 4. Ensure that an uncompressed 
 [facebook archive](https://www.facebook.com/help/212802592074644?helpref=uf_permalink)
-is made available (conventionally under **data/facebook_unstructured/<facebook-archive>**)
+is made available <br> (conventionally under **data/facebook_unstructured/\<facebook-archive\>**)
 
 4. Specify desired setup under **config/training.config** & **config/deployment.config**
 
