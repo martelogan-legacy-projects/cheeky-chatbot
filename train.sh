@@ -24,7 +24,7 @@ usage() {
     printf "\n"
     echo "Usage $0 [-h] [-f]"
     echo "where  [-h] displays usage information"
-    echo "where [-f] forces confirmation to all prompts"
+    echo "where [-f] forces confirmation to all prompts (as possible)"
     printf "\n";
     exit 1
 }
@@ -32,7 +32,9 @@ usage() {
 read_args() {
     ARGS_SHIFT=1
     case $1 in 
-        "-h") usage;;   
+        "-h") usage;;
+        "-u") USERNAME=$2 && ARGS_SHIFT=2;;
+        "-p") PASSWORD=$2 && ARGS_SHIFT=2;;   
         "-f") FORCE_CONFIRM="y";;
         *)
         echo "Unexpected parameter $1."
@@ -113,6 +115,11 @@ if [ ! -f "$FACEBOOK_STRUCTURED_OUTFILE_PATH" ]; then
     $FBCAP_PATH "$FACEBOOK_ARCHIVE_PATH"/html/messages.htm -f "$FACEBOOK_STRUCTURED_OUTPUT_TYPE" > "$FACEBOOK_STRUCTURED_OUTFILE_PATH" --resolve
 fi
 
+if [ ! -s "$FACEBOOK_STRUCTURED_OUTFILE_PATH" ]; then
+    echo "Something went wrong with structured facebook data creation. No valid file found at path = 'FACEBOOK_STRUCTURED_OUTFILE_PATH'"
+    exit 1
+fi
+
 # PARSE STRUCTURED FACEBOOK DATA FOR EACH USER TO REQUESTED TRAINABLE FORMAT
 
 mkdir -p $PARSED_DATA_PATH
@@ -127,6 +134,7 @@ do
 done
 
 printf "\n"
+
 echo "Successfully parsed trainable data for all target users"
 
 train_user_bots() {
