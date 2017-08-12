@@ -79,10 +79,10 @@ done
 if [[ -z $CONFIG_PATH ]]; then
     working_directory="$(pwd)"
     if [[ -z $FORCE_CONFIRM ]]; then
-        read -p "Please enter path to training config file: [default = ${working_directory}/config/training.config]:" CONFIG_PATH
+        read -p "Please enter path to training config file: [default = ${working_directory}/config/training/training.config]:" CONFIG_PATH
     fi
     if [[ $CONFIG_PATH = "" ]]; then
-        CONFIG_PATH="${working_directory}/config/training.config"
+        CONFIG_PATH="${working_directory}/config/training/training.config"
     fi
 fi
 
