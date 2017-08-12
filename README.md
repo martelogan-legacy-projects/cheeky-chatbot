@@ -1,9 +1,51 @@
-# Cheeky-Chatbot
+# Facebook Friendbot Factory
 
-## Python module for training chatbots from fb messenger data
+## Automated pipeline to train & deploy fb-friendified chatbots
 
-## Cite
+This project provides a convenient environment and automation pipeline
+to 
+1. Construct trainable conversation data from Facebook Messenger chat history
+2. Train chatbot models of  individual friends based on conversation data
+3. Wrap these models for simple deployment to fit third-party chatbot API
 
-If you use the cheeky-chatbot tool, please cite
+## Current Project Status
 
-* Logan Martel.
+1. **ready** - config demonstrated via DeepQA-trainable execution
+2. **ready** - successful batch training demonstrated via DeepQA module
+3. **todo** - need to script deployment and prepare example wrapper
+
+## Installation & Execution
+
+Assuming that all external dependencies are ready and respective paths 
+appropriately specified under the **config/** subdirectory, the training
+and deployment execution scripts can be run immediately from the project root.
+
+Of course, the environment setup has some fairly strict requirements: 
+
+1. Ensure that your local environment is equipped with Bash version >=3, 
+in addition to seperate distributions of Python 2.7+ and Python 3+ (ideally managed by [conda][https://docs.continuum.io/anaconda/])
+
+
+2. Install the **fb-chat-archive-parser** via pip under the Python 2.7 environment by running:
+```bash
+pip install fbchat-archive-parser
+```
+
+3. Install some training library to which the friendbot factory will 
+delegate conversation data  (the default is [DeepQA][https://github.com/Conchylicultor/DeepQA])
+
+4. Ensure that an uncompressed 
+[facebook archive][https://www.facebook.com/help/212802592074644?helpref=uf_permalink]
+is made available (conventionally under **data/facebook_unstructured/<facebook-archive>**)
+
+4. Configure the respective paths for these dependencies (and other desired parameters) under **config/training.config**
+and **config/deployment.config**
+
+5. Run `./train.sh` and subsequently `./deploy.sh` from project root to instigate pipeline
+
+
+## Citation
+
+If you use or modify the fb-friendbot-factory project, please credit the author as
+
+* Logan Martel - https://github.com/martelogan

@@ -19,4 +19,4 @@ data/facebook_parsed/*
 trained_models_backup/*
 !trained_models_backup/README.md
 .dir_bash_history
-./idea/
+./idea/*
