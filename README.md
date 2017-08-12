@@ -22,7 +22,7 @@ and deployment execution scripts can be run immediately from the project root.
 
 Of course, the environment setup has some fairly strict requirements: 
 
-1. Ensure that your local environment is equipped with Bash version >=3, 
+1. Ensure that your local environment is equipped with Bash version >=3, <br>
 in addition to seperate distributions of Python 2.7+ and Python 3+ (ideally managed by [conda](https://docs.continuum.io/anaconda/))
 
 
@@ -31,8 +31,8 @@ in addition to seperate distributions of Python 2.7+ and Python 3+ (ideally mana
    pip install fbchat-archive-parser
 ```
 
-3. Install some training library to which the friendbot factory will 
-delegate conversation data  (the default is [DeepQA](https://github.com/Conchylicultor/DeepQA))
+3. Install some training library to which the friendbot factory
+will <br> relay conversation data for consumption (the default is [DeepQA](https://github.com/Conchylicultor/DeepQA))
 
 4. Ensure that an uncompressed 
 [facebook archive](https://www.facebook.com/help/212802592074644?helpref=uf_permalink)
