@@ -17,7 +17,7 @@ to
 ## Installation & Execution
 
 Assuming that all external dependencies are ready and respective paths 
-appropriately specified under the **config** subdirectory, the training
+appropriately specified under the **[config](config)** subdirectory, the training
 and deployment execution scripts can be run immediately from the project root.
 
 Of course, the environment setup has some fairly strict requirements: 
@@ -49,6 +49,6 @@ is made available <br> (conventionally under _[data/facebook_unstructured](data/
 
 ## Citation
 
-If you use or modify the fb-friendbot-factory project, please credit the author as
+If you use or modify the fb-friendbot-factory project, please credit the original author as
 
 * Logan Martel - https://github.com/martelogan
