@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-CONFIG_PATH=/home/logan/Projects/cheeky-chatbot/config/train.config
+# To skip prompt, enter valid path to training config file here
+CONFIG_PATH=""
 
 validate_bash_version_above_3() {
     # check if $BASH_VERSION is set at all
@@ -75,6 +76,16 @@ do
     done
 done
 
+if [[ -z $CONFIG_PATH ]]; then
+    working_directory="$(pwd)"
+    if [[ -z $FORCE_CONFIRM ]]; then
+        read -p "Please enter path to training config file: [default = ${working_directory}/config/training.config]:" CONFIG_PATH
+    fi
+    if [[ $CONFIG_PATH = "" ]]; then
+        CONFIG_PATH="${working_directory}/config/training.config"
+    fi
+fi
+
 PYTHON2_PATH="$(config_get PYTHON2_PATH)";
 PYTHON3_PATH="$(config_get PYTHON3_PATH)";
 FBCAP_PATH="$(config_get FBCAP_PATH)";
@@ -83,16 +94,22 @@ FACEBOOK_STRUCTURED_OUTPUT_TYPE="$(config_get FACEBOOK_STRUCTURED_OUTPUT_TYPE)";
 FACEBOOK_STRUCTURED_OUTFILE_PATH="$(config_get FACEBOOK_STRUCTURED_OUTFILE_PATH)";
 PARSED_DATA_FORMAT="$(config_get PARSED_DATA_FORMAT)";
 PARSED_DATA_PATH="$(config_get PARSED_DATA_PATH)";
-TRAINED_MODELS_PATH="$(config_get TRAINED_MODELS_PATH)";
+TRAINED_MODELS_BACKUP_PATH="$(config_get TRAINED_MODELS_BACKUP_PATH)";
 
 declare -a target_user_raw_strings="$(config_get TARGET_USER_RAW_STRINGS_ARRAY)";
 declare -a sentence_lengths="$(config_get SENTENCE_LENGTHS_ARRAY)";
 
 # PARSE UNSTRUCTURED FACEBOOK ARCHIVE DATA TO INTENDED STRUCTURE FORMAT
 
-FACEBOOK_STRUCTURED_OUTFILE_DIR_PATH=$(dirname "${FACEBOOK_STRUCTURED_OUTFILE_PATH}")
-mkdir -p $FACEBOOK_STRUCTURED_OUTFILE_DIR_PATH
 if [ ! -f "$FACEBOOK_STRUCTURED_OUTFILE_PATH" ]; then
+    if [ ! -d "$FACEBOOK_ARCHIVE_PATH" ]; then
+        printf "\nFailed to locate facebook data archive.\n"
+        printf "\nConfig path used = '$FACEBOOK_ARCHIVE_PATH'\n"
+        printf "\nPlease provide valid path to 'FACEBOOK_ARCHIVE_PATH' parameter in training config\n\n"
+        exit 1
+    fi
+    FACEBOOK_STRUCTURED_OUTFILE_DIR_PATH=$(dirname "${FACEBOOK_STRUCTURED_OUTFILE_PATH}")
+    mkdir -p $FACEBOOK_STRUCTURED_OUTFILE_DIR_PATH
     $FBCAP_PATH "$FACEBOOK_ARCHIVE_PATH"/html/messages.htm -f "$FACEBOOK_STRUCTURED_OUTPUT_TYPE" > "$FACEBOOK_STRUCTURED_OUTFILE_PATH" --resolve
 fi
 
@@ -113,10 +130,12 @@ printf "\n"
 echo "Successfully parsed trainable data for all target users"
 
 train_user_bots() {
-    mkdir -p $TRAINED_MODELS_PATH
+    if [[ ! -z $TRAINED_MODELS_BACKUP_PATH ]]; then
+        mkdir -p $TRAINED_MODELS_BACKUP_PATH
+    fi
     MODEL_TRAINING_ROOT_DIR="$(config_get MODEL_TRAINING_ROOT_DIR)"
     TRAINABLE_MODEL_TAG_STR="$(config_get TRAINABLE_MODEL_TAG)"
-    TRAINED_MODELS_ORIGINAL_DESTINATION="$(config_get TRAINED_MODELS_ORIGINAL_DESTINATION)"
+    TRAINED_MODEL_ORIGINAL_DESTINATION="$(config_get TRAINED_MODEL_ORIGINAL_DESTINATION)"
     MODEL_TRAINING_EXECUTION_COMMAND="$(config_get MODEL_TRAINING_EXECUTION_COMMAND)"
     for target_user_raw_string in "${target_user_raw_strings[@]}"
     do
@@ -126,8 +145,10 @@ train_user_bots() {
             formatted_target_user_str="$(echo ${formatted_target_user_str// /_})"
             TRAINABLE_MODEL_TAG="$(eval "echo ${TRAINABLE_MODEL_TAG_STR}")"
             eval "${MODEL_TRAINING_EXECUTION_COMMAND}"
-            cur_trained_model_destination="$(eval "echo ${TRAINED_MODELS_ORIGINAL_DESTINATION}")"
-            mv $cur_trained_model_destination $TRAINED_MODELS_PATH/
+            if [[ ! -z $TRAINED_MODELS_BACKUP_PATH ]]; then
+                cur_trained_model_destination="$(eval "echo ${TRAINED_MODEL_ORIGINAL_DESTINATION}")"
+                cp -R $cur_trained_model_destination $TRAINED_MODELS_BACKUP_PATH/
+            fi
         done
     done
 }
